@@ -16,5 +16,7 @@
 # rubocop:enable Metrics/LineLength
 
 class PaymentMethod < ApplicationRecord
-  
+  validates :type, presence: true
+  validates :billing_id, presence: true
+  validates :user, presence: true, uniqueness: true
 end
