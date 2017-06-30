@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170629184039) do
+ActiveRecord::Schema.define(version: 20170630071751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1042,6 +1042,13 @@ ActiveRecord::Schema.define(version: 20170629184039) do
 
   add_index "partner_deals", ["valid_countries"], name: "index_partner_deals_on_valid_countries", using: :gin
 
+  create_table "payment_methods", force: :cascade do |t|
+    t.integer  "user_id",        null: false
+    t.string   "type",           null: false
+    t.text     "billing_id",     null: false
+    t.datetime "deferred_until"
+  end
+
   create_table "people", force: :cascade do |t|
     t.string   "name",               limit: 255
     t.datetime "created_at",                     null: false
@@ -1511,6 +1518,7 @@ ActiveRecord::Schema.define(version: 20170629184039) do
   add_foreign_key "media_reactions", "users"
   add_foreign_key "notification_settings", "users"
   add_foreign_key "one_signal_players", "users"
+  add_foreign_key "payment_methods", "users"
   add_foreign_key "post_follows", "posts"
   add_foreign_key "post_follows", "users"
   add_foreign_key "posts", "users"
