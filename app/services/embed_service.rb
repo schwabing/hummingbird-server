@@ -2,9 +2,9 @@ class EmbedService
   EXPIRY = 12.hours
   EMBEDDERS ||= [
     NicoVideoEmbedder,
-    TwitterEmbedder,
-    OembedEmbedder,
     OpenGraphEmbedder,
+    OembedEmbedder,
+    TwitterEmbedder,
     MetaContentEmbedder,
     GeneralUrlEmbedder
   ].freeze

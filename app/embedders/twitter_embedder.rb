@@ -1,43 +1,21 @@
-class TwitterEmbedder < OpenGraphEmbedder
-  def twitter(key)
-    page.at_css("meta[name='twitter:#{key}']")&.[]('content')
+class TwitterEmbedder < Embedder
+  def oembed_url
+    "https://publish.twitter.com/oembed?url=#{url}"
   end
 
-  def player_info
-    {
-      url: twitter('player'),
-      width: twitter('player:width'),
-      height: twitter('player:height')
-    }.compact
+  def json_oembed_url
+    "#{oembed_url}&format=json"
   end
 
-  def card
-    twitter :card
-  end
-
-  def site
-    twitter :site
-  end
-
-  def creator
-    twitter :creator
-  end
-
-  def twitter_info
-    {
-      card: card,
-      site: site,
-      creator: creator,
-      twitter: twitter,
-      player_info: player_info
-    }.reject { |_k, v| v.blank? }
+  def oembed_data
+    @oembed_data ||= JSON.parse(get(json_oembed_url))
   end
 
   def to_h
-    super.merge(twitter_info)
+    oembed_data.merge(oembed_url: json_oembed_url, url: url).reject { |_k, v| v.blank? }
   end
 
   def match?
-    card.present?
+    url.include? 'twitter.com' || url.include? 't.co'
   end
 end

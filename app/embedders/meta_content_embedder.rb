@@ -7,10 +7,6 @@ class MetaContentEmbedder < Embedder
     page.at_css("meta[name='#{key}']")&.[]('content')
   end
 
-  def keywords
-    meta :keywords
-  end
-
   def title
     page.at_css('title')&.[]('content')
   end
@@ -25,7 +21,6 @@ class MetaContentEmbedder < Embedder
 
   def to_h
     {
-      keywords: keywords,
       url: url,
       title: title,
       description: description,
