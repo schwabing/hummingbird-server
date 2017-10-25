@@ -16,6 +16,6 @@ class TwitterEmbedder < Embedder
   end
 
   def match?
-    url.include? 'twitter.com' || url.include? 't.co'
+    url.include?('twitter.com') || url.include?('t.co')
   end
 end
